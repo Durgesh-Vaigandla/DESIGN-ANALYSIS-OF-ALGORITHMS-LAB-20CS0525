@@ -17,7 +17,7 @@ void topo(int n, int indegree[10], int a[10][10]){
     }
 }
 
-void main() {
+int main() {
     int i, j, n, indegree[10], a[10][10];
     printf("Enter no.of vertices: ");
     scanf("%d", &n);
@@ -39,5 +39,5 @@ void main() {
         for(i = 1; i <= k; i++)
         printf("v%d\t", temp[i]);
     }
-    
+    return 0;
 }

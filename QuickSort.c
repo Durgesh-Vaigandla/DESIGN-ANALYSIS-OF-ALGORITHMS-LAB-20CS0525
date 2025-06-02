@@ -1,9 +1,9 @@
 #include<stdio.h>
 
-void quicksort(int[] , int, int);
+void quicksort(int a[] , int, int);
 int partition(int[], int, int);
 
-void main() {
+int main() {
     int i, n, a[20], ch = 1;
     while(ch) {
         printf("Enter the no.of Elements: \n");
@@ -43,11 +43,10 @@ int partition(int a[], int low, int high) {
             temp = a[i];
             a[i] = a[j];
             a[j] = temp;
-        } else {
-            k = a[j];
-            a[j] = a[low];
-            a[low] = k;
-        }
+        } 
     } 
+    temp = a[j];
+    a[j] = a[low];
+    a[low] = temp;
     return j;
 }
