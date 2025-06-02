@@ -1,87 +1,87 @@
 #include <stdio.h>
+#include <conio.h>  // For getch() in Turbo C
 #include <stdlib.h>
 
 #define V 5
-#define TRUE 1
-#define FALSE 0
+#define bool int
+#define true 1
+#define false 0
 
 void printSolution(int path[]);
 
 // A utility function to check if the vertex v can be added at index 'pos'
+bool isSafe(int v, bool graph[V][V], int path[], int pos) {
     if (graph[path[pos - 1]][v] == 0)
-        return FALSE;
+        return false;
 
     for (int i = 0; i < pos; i++)
         if (path[i] == v)
-            return FALSE;
+            return false;
 
-    return TRUE;
+    return true;
 }
 
 // Recursive utility function to solve Hamiltonian Cycle problem
-int hamCycleUtil(int graph[V][V], int path[], int pos) {
+bool hamCycleUtil(bool graph[V][V], int path[], int pos) {
     if (pos == V) {
         if (graph[path[pos - 1]][path[0]] == 1)
-            return TRUE;
+            return true;
         else
-            return FALSE;
+            return false;
     }
-    }
-    int v;
-    for (v = 1; v < V; v++) {
+
     for (int v = 1; v < V; v++) {
         if (isSafe(v, graph, path, pos)) {
+            path[pos] = v;
+
             if (hamCycleUtil(graph, path, pos + 1))
-                return TRUE;
+                return true;
 
             // Backtrack
             path[pos] = -1;
         }
     }
 
-    return FALSE;
+    return false;
 }
 
 // Solves the Hamiltonian Cycle problem using Backtracking
-int hamCycle(int graph[V][V]) {
-// Solves the Hamiltonian Cycle problem using Backtracking
+bool hamCycle(bool graph[V][V]) {
+    int path[V];
     int i;
+
     for (i = 0; i < V; i++)
-    int *path = (int *)malloc(V * sizeof(int));
-    for (int i = 0; i < V; i++)
         path[i] = -1;
+
+    path[0] = 0;
+
     if (!hamCycleUtil(graph, path, 1)) {
         printf("\nSolution does not exist\n");
-        free(path);
-        return FALSE;
+        return false;
     }
 
     printSolution(path);
-    free(path);
-    return TRUE;
-    printSolution(path);
-    free(path);
     return true;
 }
 
+// A utility function to print solution
+void printSolution(int path[]) {
     int i;
+    printf("Solution Exists: Following is one Hamiltonian Cycle:\n");
     for (i = 0; i < V; i++)
         printf(" %d ", path[i]);
-    printf("Solution Exists: Following is one Hamiltonian Cycle:\n");
-    for (int i = 0; i < V; i++)
+    printf(" %d \n", path[0]); // To show complete cycle
+}
+
 // Driver code
 int main() {
-    int graph1[V][V] = {
+    bool graph1[V][V] = {
         {0, 1, 0, 1, 0},
         {1, 0, 1, 1, 1},
         {0, 1, 0, 0, 1},
         {1, 1, 0, 0, 1},
         {0, 1, 1, 1, 0}
     };
-
-    hamCycle(graph1);
-
-    int graph2[V][V] = {
 
     hamCycle(graph1);
 
@@ -95,5 +95,6 @@ int main() {
 
     hamCycle(graph2);
 
+    getch();  // Pause for Turbo C++
     return 0;
-}   
+}
